@@ -5,7 +5,7 @@ public class User extends Person {
 
     public User(String login, String email, String password, Date dateOfBirth, String address) {
         super(login, email, password, dateOfBirth, address);
-        this.Balance = 0;
+        setBalance(0);
     }
     public void setBalance(int balance) {
         if (balance < 0) {
@@ -32,10 +32,5 @@ public class User extends Person {
         return Balance;
     }
 
-    public void upgradeToAdmin(int seniority) {
-        if (seniority < 0) {
-            throw new IllegalArgumentException("Seniority cannot be negative");
-        }
-        Admin admin = new Admin(getLogin(), getEmail(), getPassword(), getDateOfBirth(), getAddress(), seniority);
-    }
+
 }

@@ -10,12 +10,12 @@ public class Person {
     private String address;
 
     public Person(String login, String email, String password, Date dateOfBirth, String address) {
-        this.login = login;
-        this.email = email;
-        this.password = password;
-        this.dateOfBirth = dateOfBirth;
-        this.age = calculateAge(dateOfBirth, new Date());
-        this.address = address;
+       setLogin(login);
+       setEmail(email);
+       setPassword(password);
+       setDateOfBirth(dateOfBirth);
+       this.age = calculateAge(dateOfBirth, new Date());
+       setAddress(address);
     }
 
     private int calculateAge(Date birthDate, Date currentDate) {
@@ -32,6 +32,10 @@ public class Person {
             yearDiff--;
         }
         return yearDiff;
+    }
+
+    public void changeMail(String newMail) {
+        setEmail(newMail);
     }
 
     public void setLogin(String login) {

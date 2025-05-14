@@ -1,3 +1,5 @@
+import util.ObjectPlus;
+
 import java.util.Date;
 
 public class Admin extends Person{
@@ -16,5 +18,10 @@ public class Admin extends Person{
 
     public int getSeniority() {
         return seniority;
+    }
+
+    public void makeNewAdmin(User user, int seniority) {
+        Admin admin = new Admin(user.getLogin(),user.getEmail(),user.getPassword(),user.getDateOfBirth(),user.getAddress(),seniority);
+
     }
 }
