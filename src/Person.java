@@ -14,7 +14,7 @@ public class Person {
        setEmail(email);
        setPassword(password);
        setDateOfBirth(dateOfBirth);
-       this.age = calculateAge(dateOfBirth, new Date());
+       setAge(calculateAge(dateOfBirth, new Date()));
        setAddress(address);
     }
 

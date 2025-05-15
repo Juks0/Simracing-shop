@@ -1,14 +1,28 @@
-public class Product {
+import util.ObjectPlus;
+
+public class Product extends Category   {
+    private int id;
+    private static int IdCounter = 0;
     private String name;
     private double price;
     private int quantity;
     private String IMG_PATH;
 
     public Product(String name, double price, int quantity, String IMG_PATH) {
+        setId();
         setName(name);
         setPrice(price);
         setQuantity(quantity);
         setIMG_PATH(IMG_PATH);
+    }
+
+    public static void addIdCounter() {
+        IdCounter++;
+    }
+
+    public void setId() {
+        addIdCounter();
+        id = getIdCounter();
     }
 
     public void setName(String name) {
@@ -37,6 +51,13 @@ public class Product {
             throw new IllegalArgumentException("Image path cannot be null or empty");
         }
         this.IMG_PATH = IMG_PATH;
+    }
+    public static int getIdCounter() {
+        return IdCounter;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
