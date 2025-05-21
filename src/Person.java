@@ -1,13 +1,16 @@
+
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
-public class Person {
+public abstract class Person  {
     private String login;
     private String email;
     private String password;
     private Date dateOfBirth;
     private int age;
     private String address;
+    protected HashMap<Product,Integer> cart = new HashMap<>();
 
     public Person(String login, String email, String password, Date dateOfBirth, String address) {
        setLogin(login);
@@ -37,7 +40,38 @@ public class Person {
     public void changeMail(String newMail) {
         setEmail(newMail);
     }
+    public void addToCart(Product product, int quantity) {
+        if(cart.containsKey(product)) {
+            cart.put(product, cart.get(product) + quantity);
+        } else {
+            cart.put(product, quantity);
+        }
+    }
+    public void setCart(HashMap<Product, Integer> cart) {
+        this.cart = cart;
+    }
 
+    public void removeFromCart(Product product) {
+        if(cart.containsKey(product)) {
+            cart.remove(product);
+        } else {
+            throw new IllegalArgumentException("Product not in cart");
+        }
+    }
+    public void clearCart() {
+        cart.clear();
+    }
+    public void showCart() {
+        if(cart.isEmpty()){
+            System.out.println("Cart is empty");
+        } else {
+            System.out.println("Cart:");
+            for (Product product : cart.keySet()) {
+                System.out.println(product.getName() + " - " + cart.get(product));
+
+            }
+        }
+    }
     public void setLogin(String login) {
         if (login == null || login.isEmpty()) {
             throw new IllegalArgumentException("Login cannot be null or empty");

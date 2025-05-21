@@ -8,16 +8,15 @@ public class Pedals extends Product {
         super(name, price, quantity, IMG_PATH);
         setClutch(clutch);
     }
-    public synchronized String getNextSerial() {
-        String prefix = "PD";
-        int serial = serialMap.getOrDefault(prefix, 0) + 1;
-        serialMap.put(prefix, serial);
-        return prefix + "-" + String.format("%02d", serial);
-    }
+
     public void setClutch(boolean clutch) {
         this.clutch = clutch;
     }
     public boolean hasClutch() {
         return clutch;
+    }
+    @Override
+    protected String getSerialPrefix() {
+        return "BB";
     }
 }

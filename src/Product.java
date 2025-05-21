@@ -1,28 +1,36 @@
-import util.ObjectPlus;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Product extends Category   {
-    private int id;
-    private static int IdCounter = 0;
+public abstract class Product    {
+    private String serial;
     private String name;
     private double price;
     private int quantity;
     private String IMG_PATH;
+    private static final Map<String, Integer> serialCounters = new HashMap<>();
+
+    protected abstract String getSerialPrefix();
 
     public Product(String name, double price, int quantity, String IMG_PATH) {
-        setId();
+        generateNextSerial();
         setName(name);
         setPrice(price);
         setQuantity(quantity);
         setIMG_PATH(IMG_PATH);
     }
-
-    public static void addIdCounter() {
-        IdCounter++;
+    private synchronized void generateNextSerial() {
+        String prefix = getSerialPrefix();
+        int serial = serialCounters.getOrDefault(prefix, 0) + 1;
+        serialCounters.put(prefix, serial);
+        String newSerial = prefix + String.format("%03d", serial);
+        setSerial(newSerial);
     }
 
-    public void setId() {
-        addIdCounter();
-        id = getIdCounter();
+    public void setSerial(String serial) {
+        if(serial == null || serial.isEmpty()){
+            throw new IllegalArgumentException("Serial cannot be null or empty");
+        }
+        this.serial = serial;
     }
 
     public void setName(String name) {
@@ -45,19 +53,18 @@ public class Product extends Category   {
         }
         this.quantity = quantity;
     }
+    public void addQuantity(int quantity) {
+        if(quantity < 0){
+            throw new IllegalArgumentException("Quantity cannot be negative");
+        }
+        this.quantity += quantity;
+    }
 
     public void setIMG_PATH(String IMG_PATH) {
         if(IMG_PATH == null || IMG_PATH.isEmpty()){
             throw new IllegalArgumentException("Image path cannot be null or empty");
         }
         this.IMG_PATH = IMG_PATH;
-    }
-    public static int getIdCounter() {
-        return IdCounter;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getName() {
@@ -74,5 +81,8 @@ public class Product extends Category   {
 
     public String getIMG_PATH() {
         return IMG_PATH;
+    }
+    public String getSerial() {
+        return serial;
     }
 }

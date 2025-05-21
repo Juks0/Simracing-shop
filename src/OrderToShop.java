@@ -1,17 +1,16 @@
-import util.ObjectPlus;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
-public class Order_shop extends ObjectPlus {
+public class OrderToShop {
     private Date date;
     private HashMap<Product,Integer> Order = new HashMap<>();
 
+    private Admin admin;
 
-    public Order_shop(HashMap<Product,Integer> products) {
+    public OrderToShop(HashMap<Product,Integer> products, Admin admin) {
         setOrder(products);
+        setAdmin(admin);
         placeOrder_shop();
     }
     public void placeOrder_shop() {
@@ -19,10 +18,7 @@ public class Order_shop extends ObjectPlus {
         for(int i =0; i<Order.size(); i++){
             Product product = (Product) Order.keySet().toArray()[i];
             int quantity = Order.get(product);
-            if (product.getQuantity() < quantity) {
-                throw new IllegalArgumentException("Not enough stock for product: " + product.getName());
-            }
-            product.setQuantity(product.getQuantity() - quantity);
+            product.addQuantity(quantity);
         }
     }
     public void setDate() {
@@ -36,6 +32,12 @@ public class Order_shop extends ObjectPlus {
         Order = cart;
     }
 
+    public void setAdmin(Admin admin) {
+        if (admin == null) {
+            throw new IllegalArgumentException("Admin cannot be null");
+        }
+        this.admin = admin;
+    }
     public Date getDate() {
         return date;
     }

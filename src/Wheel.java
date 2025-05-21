@@ -4,25 +4,16 @@ import java.util.Map;
 public class Wheel extends Product{
 
     private final Map<String, Integer> serialMap = new HashMap<>();
-    private String fabric;
+    private Fabric fabric;
     private int size;
 
-    public Wheel(String name, double price, int quantity, String IMG_PATH,String fabric, int size) {
+    public Wheel(String name, double price, int quantity, String IMG_PATH,Fabric fabric, int size) {
         super(name, price, quantity, IMG_PATH);
         setFabric(fabric);
         setSize(size);
     }
 
-    public synchronized String getNextSerial() {
-        String prefix = "WH";
-        int serial = serialMap.getOrDefault(prefix, 0) + 1;
-        serialMap.put(prefix, serial);
-        return prefix + "-" + String.format("%02d", serial);
-    }
-    public void setFabric(String fabric) {
-        if(fabric == null || fabric.isEmpty()){
-            throw new IllegalArgumentException("Fabric cannot be null or empty");
-        }
+    public void setFabric(Fabric fabric) {
         this.fabric = fabric;
     }
     public void setSize(int size) {
@@ -32,11 +23,15 @@ public class Wheel extends Product{
         this.size = size;
     }
 
-    public String getFabric() {
+    public Fabric getFabric() {
         return fabric;
     }
 
     public int getSize() {
         return size;
+    }
+    @Override
+    protected String getSerialPrefix() {
+        return "WH";
     }
 }
