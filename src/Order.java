@@ -7,10 +7,14 @@ public class Order {
     private int totalItems;
     private HashMap<Product,Integer> Order = new HashMap<>();
 
-    public Order(HashMap<Product,Integer> order) {
+    private String status;
+
+    public Order(HashMap<Product,Integer> order, String status) {
         setPrice(order);
         setTotalItems(order);
         setOrder(order);
+        setPlaceDate();
+        setStatus(status);
     }
     public void setPrice(HashMap<Product,Integer> order) {
         double price = 0;
@@ -23,6 +27,12 @@ public class Order {
             throw new IllegalArgumentException("Price cannot be negative");
         }
         this.price = price;
+    }
+    public void setStatus(String status) {
+        if (status == null || status.isEmpty()) {
+            throw new IllegalArgumentException("Status cannot be null or empty");
+        }
+        this.status = status;
     }
     public void setPlaceDate() {
         placeDate = new Date();
@@ -60,5 +70,8 @@ public class Order {
 
     public HashMap<Product, Integer> getOrder() {
         return Order;
+    }
+    public String getStatus() {
+        return status;
     }
 }

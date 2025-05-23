@@ -5,7 +5,6 @@ import java.util.HashMap;
 public class OrderToShop {
     private Date date;
     private HashMap<Product,Integer> Order = new HashMap<>();
-
     private Admin admin;
 
     public OrderToShop(HashMap<Product,Integer> products, Admin admin) {

@@ -1,7 +1,5 @@
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 
 public abstract class Person  {
     private String login;
@@ -11,6 +9,7 @@ public abstract class Person  {
     private int age;
     private String address;
     protected HashMap<Product,Integer> cart = new HashMap<>();
+
 
     public Person(String login, String email, String password, Date dateOfBirth, String address) {
        setLogin(login);

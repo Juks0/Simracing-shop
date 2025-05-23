@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.util.HashMap;
 
 public class Return {
     private Date returnDate;
@@ -11,6 +12,15 @@ public class Return {
         setReason(reason);
         setReturnDate();
         setRefundAmount();
+        order.setStatus("RETURNED");
+        addBackToStock(order.getOrder());
+    }
+    public void addBackToStock(HashMap<Product,Integer> items) {
+        for(int i = 0; i < items.size(); i++) {
+            Product product = (Product) items.keySet().toArray()[i];
+            int quantity = items.get(product);
+            product.setQuantity(product.getQuantity() + quantity);
+        }
     }
     public void setReturnDate() {
         returnDate = new Date();

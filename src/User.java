@@ -1,8 +1,12 @@
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 public class User extends Person {
     private double Balance;
+    protected List<Order> orders = new ArrayList<>();
+
 
     public User(String login, String email, String password, Date dateOfBirth, String address) {
         super(login, email, password, dateOfBirth, address);
@@ -15,6 +19,11 @@ public class User extends Person {
         HashMap<Product, Integer> cart = getCart();
         double totalPrice = 0;
         for (Product product : cart.keySet()) {
+            if (product.getDiscount() != null) {
+                totalPrice -= (product.getPrice() * (100-product.getDiscount().getPercentage()))/100;
+            } else {
+                totalPrice -= product.getPrice();
+            }
             int quantity = cart.get(product);
             if (quantity <= 0) {
                 throw new IllegalArgumentException("Quantity cannot be zero or negative");
@@ -25,7 +34,8 @@ public class User extends Person {
             throw new IllegalArgumentException("Insufficient balance to place order. Needed: " + totalPrice + ", available: " + getBalance());
         }
         subtractBalance(totalPrice);
-        new Order(cart);
+        Order order = new Order(cart,"ORDERED");
+        orders.add(order);
         clearCart();
     }
 
@@ -57,4 +67,7 @@ public class User extends Person {
         return cart;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
 }

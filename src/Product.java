@@ -9,6 +9,8 @@ public abstract class Product    {
     private String IMG_PATH;
     private static final Map<String, Integer> serialCounters = new HashMap<>();
 
+    private Discount discount;
+
     protected abstract String getSerialPrefix();
 
     public Product(String name, double price, int quantity, String IMG_PATH) {
@@ -32,7 +34,12 @@ public abstract class Product    {
         }
         this.serial = serial;
     }
-
+    public void setDiscount(Discount discount) {
+        if(discount == null){
+            throw new IllegalArgumentException("Discount cannot be null");
+        }
+        this.discount = discount;
+    }
     public void setName(String name) {
         if(name == null || name.isEmpty()){
             throw new IllegalArgumentException("Name cannot be null or empty");
@@ -84,5 +91,8 @@ public abstract class Product    {
     }
     public String getSerial() {
         return serial;
+    }
+    public Discount getDiscount() {
+        return discount;
     }
 }

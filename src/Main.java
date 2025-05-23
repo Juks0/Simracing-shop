@@ -14,7 +14,7 @@ public class Main {
         Product pedal1 = new Pedals("Moza SRP", 2000, 10, "img/Moza-SR-P.jpg", false);
         Product pedal2 = new Pedals("Moza SRP cutch", 2000, 10, "img/Moza-SRP-P.webp", true);
         Product pedal3 = new Pedals("Moza SRP cutch lite", 2000, 10, "img/Moza-SRP-P-LITE.webp", true);
-
+        Discount discount1 = new Discount(base1, 10);
         LocalDate localDate = LocalDate.of(2004, 8, 5);
         Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
@@ -48,7 +48,15 @@ public class Main {
         user1.placeOrder();
         System.out.println(user1.getBalance());
         user1.showCart();
+        System.out.println(user1.getAge());
+        System.out.println(user1.getOrders());
+        System.out.println(user1.getOrders().getFirst().getStatus());
+        Return return1 = new Return(user1.getOrders().getFirst(),"Does not fit");
+        System.out.println(return1.getOrder());
+        System.out.println(return1.getReason());
+        System.out.println(user1.getOrders().getFirst().getStatus());
 
 
+        new MyFrame();
     }
 }
