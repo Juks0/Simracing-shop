@@ -1,3 +1,5 @@
+import util.ObjectPlus;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
@@ -26,6 +28,12 @@ public class Main {
                 "Koszykowa 86"
         );
         Admin admin1 = new Admin(user1,5);
+        try{
+            ObjectPlus.saveExtent();
+
+        }catch(Exception e){
+            System.out.println("Error saving extent: " + e.getMessage());
+        }
         admin1.addToCart(base1,3);
         admin1.addToCart(base2,2);
         admin1.showCart();
@@ -55,7 +63,12 @@ public class Main {
         System.out.println(return1.getOrder());
         System.out.println(return1.getReason());
         System.out.println(user1.getOrders().getFirst().getStatus());
+        try{
+            ObjectPlus.saveExtent();
 
+        }catch(Exception e){
+            System.out.println("Error saving extent: " + e.getMessage());
+        }
 
         new MyFrame();
     }

@@ -1,7 +1,12 @@
+import util.ObjectPlus;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Product    {
+public abstract class Product extends ObjectPlus {
     private String serial;
     private String name;
     private double price;
@@ -73,6 +78,7 @@ public abstract class Product    {
         }
         this.IMG_PATH = IMG_PATH;
     }
+
 
     public String getName() {
         return name;

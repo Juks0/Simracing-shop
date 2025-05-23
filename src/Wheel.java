@@ -12,7 +12,6 @@ public class Wheel extends Product{
         setFabric(fabric);
         setSize(size);
     }
-
     public void setFabric(Fabric fabric) {
         this.fabric = fabric;
     }
