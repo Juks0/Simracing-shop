@@ -1,4 +1,8 @@
-public class Discount {
+import util.ObjectPlus;
+
+import javax.swing.*;
+
+public class Discount extends ObjectPlus {
     private int percentage;
     private Product product;
 
