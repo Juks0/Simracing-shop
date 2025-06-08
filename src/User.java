@@ -6,7 +6,7 @@ import java.util.List;
 public class User extends Person {
     private double Balance;
     protected List<Order> orders = new ArrayList<>();
-
+    protected List<Returned_Order> returnedOrders = new ArrayList<>();
 
     public User(String login, String email, String password, Date dateOfBirth, String address) {
         super(login, email, password, dateOfBirth, address);
@@ -34,7 +34,7 @@ public class User extends Person {
             throw new IllegalArgumentException("Insufficient balance to place order. Needed: " + totalPrice + ", available: " + getBalance());
         }
         subtractBalance(totalPrice);
-        Order order = new Order(cart,"ORDERED");
+        Order order = new Order(cart,"ORDERED",this);
         orders.add(order);
         clearCart();
     }
@@ -69,5 +69,15 @@ public class User extends Person {
 
     public List<Order> getOrders() {
         return orders;
+    }
+    @Override
+    public void removeFromExtent()  {
+        if(orders != null) {
+            for (Order order : new ArrayList<>(orders)) {
+                order.removeFromExtent();
+            }
+            orders.clear();
+        }
+        super.removeFromExtent();
     }
 }

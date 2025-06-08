@@ -1,8 +1,5 @@
 import util.ObjectPlus;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,17 +10,25 @@ public abstract class Product extends ObjectPlus {
     private int quantity;
     private String IMG_PATH;
     private static final Map<String, Integer> serialCounters = new HashMap<>();
-
     private Discount discount;
+    private Brand brand;
 
     protected abstract String getSerialPrefix();
 
-    public Product(String name, double price, int quantity, String IMG_PATH) {
+    public Product(String name, double price, int quantity, String IMG_PATH, Brand brand) {
         generateNextSerial();
         setName(name);
         setPrice(price);
         setQuantity(quantity);
         setIMG_PATH(IMG_PATH);
+        setBrand(brand);
+    }
+
+
+    public Product getProductBySerial(String serial){
+        return ObjectPlus.getExtentFromClass(this.getClass()).stream()
+                .filter(product -> product.getSerial().equals(serial))
+                .findFirst().orElse(null);
     }
     private synchronized void generateNextSerial() {
         String prefix = getSerialPrefix();
@@ -38,6 +43,12 @@ public abstract class Product extends ObjectPlus {
             throw new IllegalArgumentException("Serial cannot be null or empty");
         }
         this.serial = serial;
+    }
+    public void setBrand(Brand brand) {
+        if(brand == null){
+            throw new IllegalArgumentException("Brand cannot be null");
+        }
+        this.brand = brand;
     }
     public void setDiscount(Discount discount) {
         if(discount == null){
@@ -79,7 +90,12 @@ public abstract class Product extends ObjectPlus {
         this.IMG_PATH = IMG_PATH;
     }
 
-
+    public void removeDiscount() {
+        if (discount != null) {
+            discount.removeDiscount();
+            this.discount = null;
+        }
+    }
     public String getName() {
         return name;
     }

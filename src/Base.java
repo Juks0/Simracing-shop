@@ -1,18 +1,18 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Base extends Product {
-    private final Map<String, Integer> serialMap = new HashMap<>();
+public class Base extends Product   {
     private int torque;
-    private Mra mra; // opcional
+    private Mra mra;
+    private boolean boostMode;
 
-    public Base(String name, double price, int quantity,String IMG_PATH, int torque, Mra mra) {
-        super(name,price,quantity,IMG_PATH);
+    public Base(String name, double price, int quantity,String IMG_PATH,Brand brand ,int torque, Mra mra) {
+        super(name,price,quantity,IMG_PATH,brand);
         setTorque(torque);
         setMra(mra);
     }
-    public Base(String name, double price, int quantity,String IMG_PATH, int torque) {
-        super(name,price,quantity,IMG_PATH);
+    public Base(String name, double price, int quantity,Brand brand,String IMG_PATH, int torque) {
+        super(name,price,quantity,IMG_PATH,brand);
         setTorque(torque);
     }
     public void setTorque(int torque) {
@@ -23,7 +23,18 @@ public class Base extends Product {
     }
 
     public void setMra(Mra mra) {
+        if(mra == null) {
+            throw new IllegalArgumentException("MRA cannot be null");
+        }
         this.mra = mra;
+    }
+
+    public boolean isBoostMode() {
+        return boostMode;
+    }
+
+    public void setBoostMode(boolean boostMode) {
+        this.boostMode = boostMode;
     }
 
     public int getTorque() {
@@ -37,4 +48,9 @@ public class Base extends Product {
     protected String getSerialPrefix() {
         return "BB";
     }
+    @Override
+    public String toString() {
+        return getName() + " - " + getPrice() + " $"+ " "+ getQuantity();
+    }
+
 }

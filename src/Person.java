@@ -3,7 +3,7 @@ import util.ObjectPlus;
 
 import java.util.*;
 
-public abstract class Person  {
+public abstract class Person extends ObjectPlus  {
 
     private String login;
     private String email;
@@ -54,16 +54,15 @@ public abstract class Person  {
     }
 
     public static Person verifyCredentials(String login, String password) {
-        return ObjectPlus.getExtentFromClass(Person.class).stream()
+        return ObjectPlus.getExtentFromClass(Admin.class).stream()
                 .filter(person -> person.getLogin().equals(login) && person.getPassword().equals(password))
                 .findFirst()
                 .orElse(null);
     }
     public static boolean verifyCredentialsTF(String login, String password) {
-        return ObjectPlus.getExtentFromClass(Person.class).stream()
+        return ObjectPlus.getExtentFromClass(Admin.class).stream()
                 .anyMatch(person -> person.getLogin().equals(login) && person.getPassword().equals(password));
     }
-
 
     public void removeFromCart(Product product) {
         if(cart.containsKey(product)) {

@@ -1,11 +1,11 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Pedals extends Product {
-    private final Map<String, Integer> serialMap = new HashMap<>();
+public class Pedals extends Product  {
     private boolean clutch;
-    public Pedals(String name, double price, int quantity, String IMG_PATH, boolean clutch) {
-        super(name, price, quantity, IMG_PATH);
+    private String springs;
+    public Pedals(String name, double price, int quantity, String IMG_PATH, Brand brand,boolean clutch) {
+        super(name, price, quantity, IMG_PATH,brand);
         setClutch(clutch);
     }
 
@@ -18,5 +18,10 @@ public class Pedals extends Product {
     @Override
     protected String getSerialPrefix() {
         return "BB";
+    }
+
+    @Override
+    public String toString() {
+        return getName() + " - " + getPrice() + " $"+ " "+ getQuantity();
     }
 }

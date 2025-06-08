@@ -1,19 +1,21 @@
+import util.ObjectPlus;
+
 import java.util.Date;
 import java.util.HashMap;
 
-public class Return {
+public class Returned_Order extends ObjectPlus {
     private Date returnDate;
     private double refundAmount;
     private String reason;
     private Order order;
 
-    public Return(Order order, String reason) {
+    public Returned_Order(Order order, String reason) {
         setOrder(order);
         setReason(reason);
         setReturnDate();
         setRefundAmount();
         order.setStatus("RETURNED");
-        addBackToStock(order.getOrder());
+        addBackToStock(order.getItems());
     }
     public void addBackToStock(HashMap<Product,Integer> items) {
         for(int i = 0; i < items.size(); i++) {

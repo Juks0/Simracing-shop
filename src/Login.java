@@ -1,30 +1,31 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Login {
     private JButton loginAsAdminButton;
     private JTextField mailTextField;
     private JTextField passwordTextField;
-
+    private JPanel panel1;
+    private JFrame frame;
 
     Login(){
-        loginAsAdminButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String login = mailTextField.getText();
-                String password = passwordTextField.getText();
+        frame = new JFrame("Admin UI");
+        frame.setContentPane(panel1);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+        frame.setSize(700, 500);
+        frame.setLocationRelativeTo(null);
+        loginAsAdminButton.addActionListener(e -> {
+            String login = mailTextField.getText();
+            String password = passwordTextField.getText();
+            if (Person.verifyCredentialsTF(login, password)) {
+                Main.setPerson(Person.verifyCredentials(login, password));
+                SwingUtilities.getWindowAncestor(loginAsAdminButton).dispose();
+                CategoriesUI categoriesUI = new CategoriesUI();
+                categoriesUI.setVisible(true);
 
-                if (Person.verifyCredentialsTF(login, password)) {
-                    // Close current login window
-                    SwingUtilities.getWindowAncestor(loginAsAdminButton).dispose();
-
-                    // Open new window
-                    AdminUI adminUI = new AdminUI();
-                    adminUI.setVisible(true);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Invalid login or password!", "Login Failed", JOptionPane.ERROR_MESSAGE);
-                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid login or password!", "Login Failed", JOptionPane.ERROR_MESSAGE);
             }
         });
     }

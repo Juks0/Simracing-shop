@@ -1,18 +1,21 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Wheel extends Product{
+public class Wheel extends Product {
 
-    private final Map<String, Integer> serialMap = new HashMap<>();
     private Fabric fabric;
     private int size;
+    private int rotationAngle;
 
-    public Wheel(String name, double price, int quantity, String IMG_PATH,Fabric fabric, int size) {
-        super(name, price, quantity, IMG_PATH);
+    public Wheel(String name, double price, int quantity, String IMG_PATH,Brand brand,Fabric fabric, int size) {
+        super(name, price, quantity, IMG_PATH,brand);
         setFabric(fabric);
         setSize(size);
     }
     public void setFabric(Fabric fabric) {
+        if (fabric == null) {
+            throw new IllegalArgumentException("Fabric cannot be null");
+        }
         this.fabric = fabric;
     }
     public void setSize(int size) {
@@ -21,7 +24,12 @@ public class Wheel extends Product{
         }
         this.size = size;
     }
-
+    public void changeRotationAngle(int angle) {
+        if (angle < 0 || angle > 1800) {
+            throw new IllegalArgumentException("Rotation angle must be between 0 and 360 degrees");
+        }
+        this.rotationAngle=angle;
+    }
     public Fabric getFabric() {
         return fabric;
     }
@@ -32,5 +40,14 @@ public class Wheel extends Product{
     @Override
     protected String getSerialPrefix() {
         return "WH";
+    }
+
+
+    public int getRotationAngle() {
+        return rotationAngle;
+    }
+    @Override
+    public String toString() {
+        return getName() + " - " + getPrice() + " $"+ " "+ getQuantity();
     }
 }
