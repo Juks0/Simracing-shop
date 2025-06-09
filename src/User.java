@@ -10,7 +10,11 @@ public class User extends Person {
 
     public User(String login, String email, String password, Date dateOfBirth, String address) {
         super(login, email, password, dateOfBirth, address);
-        setBalance(0);
+        try {
+            setBalance(0);
+        } catch (IllegalArgumentException e) {
+            super.removeFromExtent();
+        }
     }
     public void placeOrder() {
         if (getCart().isEmpty()) {

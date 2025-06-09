@@ -1,18 +1,20 @@
 import util.ObjectPlus;
 
-import javax.swing.*;
-
 public class Discount extends ObjectPlus {
     private int percentage;
     private Product product;
     private double oldPrice;
 
     public Discount(Product product, int percentage) {
-        setProduct(product);
-        setPercentage(percentage);
-        product.setDiscount(this);
-        setOldPrice(product.getPrice());
-        product.setPrice(product.getPrice() * (1 - percentage / 100.0));
+        try {
+            setProduct(product);
+            setPercentage(percentage);
+            product.setDiscount(this);
+            setOldPrice(product.getPrice());
+            product.setPrice(product.getPrice() * (1 - percentage / 100.0));
+        }catch (IllegalArgumentException e) {
+            removeFromExtent();
+        }
     }
     public void setProduct(Product product) {
         this.product = product;
@@ -30,9 +32,7 @@ public class Discount extends ObjectPlus {
         }
         this.oldPrice = oldPrice;
     }
-    public double getOldPrice() {
-        return oldPrice;
-    }
+
     public Product getProduct() {
         return product;
     }

@@ -19,26 +19,31 @@ public class Admin_OrderUI {
         panel1 = new JPanel();
         panel1.setLayout(new BorderLayout());
 
-        String[] columnNames = {"Name", "Price", "Stock", "Quantity"};
+        // Dodana kolumna "Zdjęcie"
+        String[] columnNames = {"Zdjęcie", "Name", "Price", "Stock", "Quantity"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return column == 3;
+                return column == 4; // Tylko "Quantity" edytowalne
             }
 
             @Override
             public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 1) return Double.class;
-                if (columnIndex == 2) return Integer.class;
+                if (columnIndex == 0) return ImageIcon.class; // Zdjęcie
+                if (columnIndex == 2) return Double.class;
                 if (columnIndex == 3) return Integer.class;
+                if (columnIndex == 4) return Integer.class;
                 return String.class;
             }
         };
 
         table1 = new JTable(tableModel);
-        table1.setRowHeight(25);
+        table1.setRowHeight(60); // Większa wysokość na miniaturę
         JScrollPane tableScroll = new JScrollPane(table1);
         panel1.add(tableScroll, BorderLayout.CENTER);
+
+        // Szerokość kolumny na zdjęcie
+        table1.getColumnModel().getColumn(0).setPreferredWidth(60);
 
         button1 = new JButton("Order");
         panel1.add(button1, BorderLayout.SOUTH);
@@ -49,7 +54,7 @@ public class Admin_OrderUI {
         frame = new JFrame("Admin Order Management");
         frame.setContentPane(panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 600);
+        frame.setSize(600, 600);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
@@ -64,7 +69,7 @@ public class Admin_OrderUI {
 
             for (int i = 0; i < rowCount; i++) {
                 int quantity = 0;
-                Object quantityObj = model.getValueAt(i, 3);
+                Object quantityObj = model.getValueAt(i, 4);
                 if (quantityObj instanceof Integer) {
                     quantity = (Integer) quantityObj;
                 } else if (quantityObj instanceof String && !((String) quantityObj).isEmpty()) {
@@ -73,8 +78,8 @@ public class Admin_OrderUI {
                     } catch (NumberFormatException ignored) {}
                 }
                 if (quantity > 0) {
-                    String productName = (String) model.getValueAt(i, 0);
-                    double price = (double) model.getValueAt(i, 1);
+                    String productName = (String) model.getValueAt(i, 1);
+                    double price = (double) model.getValueAt(i, 2);
                     for (Object obj : ObjectPlus.getExtentFromClass(categoryClass)) {
                         Product product = (Product) obj;
                         if (product.getName().equals(productName)) {
@@ -104,10 +109,6 @@ public class Admin_OrderUI {
             summary.append("\nTotal cost: ").append(String.format("%.2f", totalCost)).append(" zł");
             JOptionPane.showMessageDialog(frame, summary.toString());
             fillProductTableByCategory();
-
-//            for (int i = 0; i < rowCount; i++) {
-//                model.setValueAt(0, i, 3);
-//            }
         });
 
         showOrdersButton.addActionListener(e -> {
@@ -129,7 +130,15 @@ public class Admin_OrderUI {
         if (categoryClass != null) {
             for (Object obj : ObjectPlus.getExtentFromClass(categoryClass)) {
                 Product product = (Product) obj;
+                ImageIcon icon = null;
+                if (product.getIMG_PATH() != null && !product.getIMG_PATH().isEmpty()) {
+                    icon = new ImageIcon(product.getIMG_PATH());
+                    // Skalowanie do miniatury np. 50x50 px
+                    Image img = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                    icon = new ImageIcon(img);
+                }
                 Object[] row = {
+                        icon,
                         product.getName(),
                         product.getPrice(),
                         product.getQuantity(),

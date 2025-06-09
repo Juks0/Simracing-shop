@@ -7,7 +7,11 @@ public class Brand extends ObjectPlus {
     private List<Product> featuredProducts;
 
     public Brand(String name) {
-        setName(name);
+        try {
+            setName(name);
+        } catch (IllegalArgumentException e) {
+            removeFromExtent();
+        }
     }
     public void setName(String name) {
         if (name == null || name.isEmpty()) {

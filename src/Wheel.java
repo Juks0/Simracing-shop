@@ -9,8 +9,12 @@ public class Wheel extends Product {
 
     public Wheel(String name, double price, int quantity, String IMG_PATH,Brand brand,Fabric fabric, int size) {
         super(name, price, quantity, IMG_PATH,brand);
-        setFabric(fabric);
-        setSize(size);
+        try {
+            setFabric(fabric);
+            setSize(size);
+        } catch (IllegalArgumentException e) {
+            super.removeFromExtent();
+        }
     }
     public void setFabric(Fabric fabric) {
         if (fabric == null) {
@@ -48,6 +52,6 @@ public class Wheel extends Product {
     }
     @Override
     public String toString() {
-        return getName() + " - " + getPrice() + " $"+ " "+ getQuantity();
+        return getName() + " - " + getPrice() + " $"+ " "+ getQuantity() +" "+getSerial();
     }
 }

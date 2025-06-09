@@ -10,12 +10,16 @@ public class Returned_Order extends ObjectPlus {
     private Order order;
 
     public Returned_Order(Order order, String reason) {
-        setOrder(order);
-        setReason(reason);
-        setReturnDate();
-        setRefundAmount();
-        order.setStatus("RETURNED");
-        addBackToStock(order.getItems());
+        try {
+            setOrder(order);
+            setReason(reason);
+            setReturnDate();
+            setRefundAmount();
+            order.setStatus("RETURNED");
+            addBackToStock(order.getItems());
+        }catch (IllegalArgumentException e) {
+            super.removeFromExtent();
+        }
     }
     public void addBackToStock(HashMap<Product,Integer> items) {
         for(int i = 0; i < items.size(); i++) {

@@ -6,7 +6,11 @@ public class Pedals extends Product  {
     private String springs;
     public Pedals(String name, double price, int quantity, String IMG_PATH, Brand brand,boolean clutch) {
         super(name, price, quantity, IMG_PATH,brand);
-        setClutch(clutch);
+        try {
+            setClutch(clutch);
+        }catch (IllegalArgumentException e) {
+            super.removeFromExtent();
+        }
     }
 
     public void setClutch(boolean clutch) {
@@ -17,11 +21,11 @@ public class Pedals extends Product  {
     }
     @Override
     protected String getSerialPrefix() {
-        return "BB";
+        return "PD";
     }
 
     @Override
     public String toString() {
-        return getName() + " - " + getPrice() + " $"+ " "+ getQuantity();
+        return getName() + " - " + getPrice() + " $"+ " "+ getQuantity() +" "+getSerial();
     }
 }

@@ -94,19 +94,19 @@ public class OrderToShopBrowser {
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            ObjectPlus.loadExtent();
-        } catch (Exception e) {
-            System.out.println("Nie udało się załadować ekstensji: " + e.getMessage());
-        }
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("OrderToShop Browser");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setContentPane(new OrderToShopBrowser().getContentPane());
-            frame.setSize(800, 400);
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        });
-    }
+//    public static void main(String[] args) {
+//        try {
+//            ObjectPlus.loadExtent();
+//        } catch (Exception e) {
+//            System.out.println("Nie udało się załadować ekstensji: " + e.getMessage());
+//        }
+//        SwingUtilities.invokeLater(() -> {
+//            JFrame frame = new JFrame("OrderToShop Browser");
+//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//            frame.setContentPane(new OrderToShopBrowser().getContentPane());
+//            frame.setSize(800, 400);
+//            frame.setLocationRelativeTo(null);
+//            frame.setVisible(true);
+//        });
+//    }
 }

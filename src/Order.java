@@ -12,6 +12,7 @@ public class Order extends ObjectPlus {
     private String status;
 
     public Order(HashMap<Product,Integer> items, String status, User user) {
+        try{
         setPrice(items);
         setTotalItems(items);
         setItems(items);
@@ -19,22 +20,30 @@ public class Order extends ObjectPlus {
         setStatus(status);
         setUser(user);
         placeOrder();
+        }catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid order details: " + e.getMessage());
+        }
+
     }
    public Order(Product product, int quantity,String status) {
-        if (product == null) {
-            throw new IllegalArgumentException("Product name cannot be null or empty");
+        try {
+            if (product == null) {
+                throw new IllegalArgumentException("Product name cannot be null or empty");
+            }
+            if (quantity <= 0) {
+                throw new IllegalArgumentException("Quantity must be greater than zero");
+            }
+            HashMap<Product, Integer> order = new HashMap<>();
+            order.put(product, quantity);
+            setPrice(order);
+            setTotalItems(order);
+            setItems(order);
+            setPlaceDate();
+            setStatus(status);
+            placeOrder();
+        }catch (IllegalArgumentException e) {
+            removeFromExtent();
         }
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("Quantity must be greater than zero");
-        }
-        HashMap<Product, Integer> order = new HashMap<>();
-        order.put(product, quantity);
-        setPrice(order);
-        setTotalItems(order);
-        setItems(order);
-        setPlaceDate();
-        setStatus(status);
-        placeOrder();
    }
    public void placeOrder(){
          for(int i = 0; i< items.size(); i++){
@@ -103,7 +112,6 @@ public class Order extends ObjectPlus {
         if (items.isEmpty()) {
             throw new IllegalArgumentException("Order has no items to return");
         }
-//        Order order = this;
         Returned_Order returnedOrder = new Returned_Order(this, "No reason provided");
         user.returnedOrders.add(returnedOrder);
         this.removeFromExtent();

@@ -9,12 +9,20 @@ public class Admin extends Person implements IAdmin {
 
     public Admin(String login, String email, String password, Date dateOfBirth, String address, int seniority) {
         super(login, email, password, dateOfBirth, address);
-        setSeniority(seniority);
+        try {
+            setSeniority(seniority);
+        } catch (IllegalArgumentException e) {
+            super.removeFromExtent();
+        }
     }
 
     public Admin(User user, int seniority) {
         super(user.getLogin(), user.getEmail(), user.getPassword(), user.getDateOfBirth(), user.getAddress());
-        setSeniority(seniority);
+        try {
+            setSeniority(seniority);
+        } catch (IllegalArgumentException e) {
+            super.removeFromExtent();
+        }
     }
 
     public void setSeniority(int seniority) {
@@ -33,7 +41,7 @@ public class Admin extends Person implements IAdmin {
     }
 
     @Override
-    public void OrderProducts() {
+    public void orderProducts() {
         HashMap<Product, Integer> cartCopy = new HashMap<>(getCart());
         OrderToShop orderToShop = new OrderToShop(cartCopy, this);
         addOrder(orderToShop);
@@ -50,14 +58,6 @@ public class Admin extends Person implements IAdmin {
         if (orders.remove(order)) {
             order.removeFromExtent();
         }
-    }
-
-    public int getSeniority() {
-        return seniority;
-    }
-
-    public List<OrderToShop> getOrders() {
-        return orders;
     }
 
     @Override

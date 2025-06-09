@@ -8,12 +8,20 @@ public class Base extends Product   {
 
     public Base(String name, double price, int quantity,String IMG_PATH,Brand brand ,int torque, Mra mra) {
         super(name,price,quantity,IMG_PATH,brand);
-        setTorque(torque);
-        setMra(mra);
+        try {
+            setTorque(torque);
+            setMra(mra);
+        } catch (IllegalArgumentException e) {
+            removeFromExtent();
+        }
     }
     public Base(String name, double price, int quantity,Brand brand,String IMG_PATH, int torque) {
         super(name,price,quantity,IMG_PATH,brand);
-        setTorque(torque);
+        try {
+            setTorque(torque);
+        } catch (IllegalArgumentException e) {
+            super.removeFromExtent();
+        }
     }
     public void setTorque(int torque) {
         if(torque < 1500 || torque > 20000){
@@ -50,7 +58,7 @@ public class Base extends Product   {
     }
     @Override
     public String toString() {
-        return getName() + " - " + getPrice() + " $"+ " "+ getQuantity();
+        return getName() + " - " + getPrice() + " $"+ " "+ getQuantity() +" "+getSerial();
     }
 
 }

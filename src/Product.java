@@ -16,12 +16,16 @@ public abstract class Product extends ObjectPlus {
     protected abstract String getSerialPrefix();
 
     public Product(String name, double price, int quantity, String IMG_PATH, Brand brand) {
+        try{
         generateNextSerial();
         setName(name);
         setPrice(price);
         setQuantity(quantity);
         setIMG_PATH(IMG_PATH);
         setBrand(brand);
+    }catch (IllegalArgumentException e) {
+            super.removeFromExtent();
+        }
     }
 
 
@@ -51,9 +55,6 @@ public abstract class Product extends ObjectPlus {
         this.brand = brand;
     }
     public void setDiscount(Discount discount) {
-        if(discount == null){
-            throw new IllegalArgumentException("Discount cannot be null");
-        }
         this.discount = discount;
     }
     public void setName(String name) {
@@ -90,6 +91,7 @@ public abstract class Product extends ObjectPlus {
         this.IMG_PATH = IMG_PATH;
     }
 
+
     public void removeDiscount() {
         if (discount != null) {
             discount.removeDiscount();
@@ -108,13 +110,14 @@ public abstract class Product extends ObjectPlus {
         return quantity;
     }
 
-    public String getIMG_PATH() {
-        return IMG_PATH;
-    }
     public String getSerial() {
         return serial;
     }
     public Discount getDiscount() {
         return discount;
     }
+    public String getIMG_PATH() {
+        return IMG_PATH;
+    }
+
 }
