@@ -24,7 +24,9 @@ Key Features
 
 Class Model
 
-   ![image alt](https://github.com/Juks0/Simracing-shop/blob/master/Entity%20diagram.pdf)
+   ![Entity diagram](https://github.com/Juks0/Simracing-shop/blob/master/Entity%20diagram.pdf)
+   ![Implementation diagram](https://github.com/Juks0/Simracing-shop/blob/master/Implementation%20diagram.pdf)
+
 
 Orders exist only in the context of an Admin (composition). Collection relationships are ordered; there are subsets (such as user-owned orders) and various association relations.
 Example Use Cases
@@ -73,13 +75,14 @@ Moza r21	$367.00	24
 
     Order Summary: Total value and product count.
 
-Extensions & Future Plans
+Use case model
+   ![Use case model](https://github.com/Juks0/Simracing-shop/blob/master/Use%20case%20model.pdf)
+Activity diagram
+   ![Activity diagram](https://github.com/Juks0/Simracing-shop/blob/master/Use%20case%20model.pdf)
+State diagram
+   ![State diagram](https://github.com/Juks0/Simracing-shop/blob/master/State%20diagram.pdf)
 
-    Advanced order processing
-
-    Enhanced user and discount management
-
-    Additional reports and admin panels
+   
 
 Technical Information
 
