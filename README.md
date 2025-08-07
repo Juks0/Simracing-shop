@@ -57,21 +57,13 @@ Implementation Highlights
 
     Strict attribute validation and constraint enforcement.
 
-Sample GUI Layout
 
-    Login Panel: Username, Password
-
-    Category View:
-    Name	Products count
-    Base	4
-    Wheel	8
-    Pedals	3
 
 Product List:
 Name	Price	In Stock	Quantity
-Moza r9	$15.00	20	
-Moza r16	$1,400.00	3	
-Moza r21	$367.00	24	
+Moza r9	$15.00	    20	
+Moza r16 $1,400.00	3	
+Moza r21 $367.00	24	
 
     Order Summary: Total value and product count.
 
