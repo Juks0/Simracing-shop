@@ -59,14 +59,6 @@ Implementation Highlights
 
 
 
-Product List:
-Name	Price	In Stock	Quantity
-Moza r9	$15.00	    20	
-Moza r16 $1,400.00	3	
-Moza r21 $367.00	24	
-
-    Order Summary: Total value and product count.
-
 Use case model
    ![Use case model](https://github.com/Juks0/Simracing-shop/blob/master/Use%20case%20model.pdf)
 Activity diagram
@@ -78,4 +70,4 @@ State diagram
 
 Technical Information
 
-The project is written in Java, designed for easy future expansion and integration. Data is serialized to a file (extent.ser). Class diagrams and use case diagrams are supplied in the internal documentation.
+The project is written in Java, designed for easy future expansion and integration. Data is serialized to a file (extent.ser). 
