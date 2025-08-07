@@ -1,122 +1,86 @@
-Simshop
-Opis projektu
+Simshop – Project Description
 
-Simshop to system obsługujący sklep internetowy z akcesoriami simracingowymi. System umożliwia zarządzanie asortymentem (produkty: bazy, kierownice, pedały), obsługę zamówień, zwrotów oraz użytkowników i administratorów.
-Funkcjonalności (w skrócie)
+Simshop is an e-commerce system dedicated to managing a shop with sim racing accessories. The system supports essential business operations such as product management, order processing, returns, and comprehensive administration for users, admins, and superadmins.
+Key Features
 
-    Obiekty dziedziczenia: Product → Base, Wheel, Pedals
+    Object Inheritance:
+    Products are modeled using inheritance with a general Product class and specialized subclasses: Base, Wheel, Pedals.
 
-    Każdy produkt posiada unikalny numer seryjny, nazwę, cenę, zdjęcie, gwarancję
+    Product Information:
+    Each product has a unique serial number, name, price, photo, and warranty. Products feature type-specific attributes (e.g., torque for bases, material, clutch presence for pedals or wheels).
 
-    Produkty mają cechy charakterystyczne dla typu (np. moment obrotowy, materiał, obecność sprzęgła)
+    Relations:
+    Products are linked to Brand and can participate in Discounts.
+    Orders can contain multiple product line items and maintain a status (returns enabled).
 
-    Produkty powiązane z markami (Brand) i rabatami (Discount)
+    User Management:
+    The system distinguishes between regular Users, Admins (who manage discounts), and SuperAdmins (who can delete accounts and modify emails).
 
-    Zamówienia mogą zawierać wiele pozycji produktowych i status (możliwy zwrot)
+    Data Validation & Uniqueness:
+    Key attribute validations are in place (age, status, enum restrictions). Serial numbers are enforced as unique. Automatic calculations (like user age) are implemented.
 
-    Obsługa użytkownika (User), administratora (Admin), superadmina (SuperAdmin)
+    Persistence (Serialization):
+    Data is serialized to a file (extent.ser) for persistence using an ObjectPlus approach, supporting future expansion.
 
-    Walidacja danych, unikalność numerów seryjnych, automatyczne wyliczanie wieku itp.
+Class Model
 
-    Serializacja danych (trwałość – ObjectPlus)
+   ![image alt](https://github.com/Juks0/Simracing-shop/blob/master/Entity%20diagram.pdf)
 
-    Model gotowy do rozbudowy (np. rozbudowana obsługa zamówień)
+Orders exist only in the context of an Admin (composition). Collection relationships are ordered; there are subsets (such as user-owned orders) and various association relations.
+Example Use Cases
 
-Model klas
+    User registration and login
 
-    Product (abstrakcyjna): serial, name, price, imgPath, quantity, guarantee, serialCounters (statyczny)
+    Browsing product categories (Base, Wheel, Pedals)
 
-        Base: torque (enum), ifBoostMode (boolean)
+    Placing new orders (selecting products and quantities)
 
-        Wheel: size (int[1..3]), material (enum), rotationAngle (int)
+    Order review and returns
 
-        Pedals: ifClutch (opcjonalne)
+    Management of discounts (Admin/SuperAdmin)
 
-    Brand: name, featuredProducts (do 3)
+    Account deletion (SuperAdmin), email changes
 
-    Discount: percentage, oldPrice
+Implementation Highlights
 
-    Order: data, status ("ORDERED", "RETURNED"), produkty + ilości, user, cena
+    Serialization enables data persistence ("file-based extent").
 
-    ReturnedOrder: returnDate, refundAmount, reason
+    Complex, optional, repeatable, and derived attributes; class-level attributes present.
 
-    Person (abstrakcyjna): login, email, password, dateOfBirth, age (pochodny), address
+    Use of polymorphism, inheritance, and interfaces.
 
-        User: balance, lista zamówień
+    Collection handling (ordered, subsets).
 
-        Admin: favouriteTheme, lista zamówień, zarządzanie zniżkami, kontami itd.
+    Dynamic transformation (e.g., Order to ReturnedOrder).
 
-        SuperAdmin: seniority, rozszerzone uprawnienia
+    Strict attribute validation and constraint enforcement.
 
-Przykładowe przypadki użycia
+Sample GUI Layout
 
-    Rejestracja/logowanie użytkownika
+    Login Panel: Username, Password
 
-    Przeglądanie kategorii produktowych (Base, Wheel, Pedals)
+    Category View:
+    Name	Products count
+    Base	4
+    Wheel	8
+    Pedals	3
 
-    Składanie nowego zamówienia, wybór produktów i ilości
+Product List:
+Name	Price	In Stock	Quantity
+Moza r9	$15.00	20	
+Moza r16	$1,400.00	3	
+Moza r21	$367.00	24	
 
-    Podgląd i zwracanie zamówień
+    Order Summary: Total value and product count.
 
-    Zarządzanie rabatami (Admin, SuperAdmin)
+Extensions & Future Plans
 
-    Usuwanie konta (SuperAdmin), zmiana maila
+    Advanced order processing
 
-Najważniejsze cechy implementacyjne
+    Enhanced user and discount management
 
-    Serializacja — dane zapisywane do pliku (ObjectPlus, trwałość)
+    Additional reports and admin panels
 
-    Atrybuty złożone/opcjonalne/powtarzalne/pochodne/klasowe
+Technical Information
 
-    Polimorfizm i dziedziczenie, interfejsy
-
-    Kompozycja — zamówienia sklepu istnieją tylko w kontekście Admina
-
-    Kolekcje uporządkowane (ordered), subset (zamówienia użytkownika), relacje asocjacyjne
-
-    Dynamiczne przekształcenie obiektów (Order → ReturnedOrder)
-
-    Walidacja kluczowych atrybutów (wiek, statusy, ograniczenia dla enumów)
-
-Schemat GUI (propozycja)
-
-Panel logowania:
-
-    Login
-
-    Hasło
-
-Widok kategorii:
-
-text
-Nazwa  | Liczba produktów
--------|-----------------
-Base   | 4
-Wheel  | 8
-Pedals | 3
-
-Lista produktów:
-
-text
-Nazwa      | Cena     | Stan | Ilość
------------|----------|------|------
-Moza r9    | 15.00 $  | 20   |
-Moza r16   | 1400.00 $| 3    |
-Moza r21   | 367.00 $ | 24   |
-
-Podsumowanie zamówienia:
-
-    Łączna kwota oraz liczba pozycji
-
-Rozszerzenia i plany rozwoju
-
-    Zaawansowana obsługa zamówień
-
-    Rozbudowane zarządzanie użytkownikami i rabatami
-
-    Dodatkowe raporty i panele administracyjne
-
-Informacje techniczne
-
-Projekt napisany w języku Java (przygotowany pod rozbudowę w przyszłości).
-Zaimplementowana serializacja danych do pliku extent.ser. Diagramy klas i przypadków użycia dostępne w dokumentacji wewnętrznej.
+The project is written in Java, designed for easy future expansion and integration. Data is serialized to a file (extent.ser). Class diagrams and use case diagrams are supplied in the internal documentation.
